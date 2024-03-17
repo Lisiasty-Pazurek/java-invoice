@@ -20,6 +20,20 @@ public class InvoiceTest {
     public void createEmptyInvoiceForTheTest() {
         invoice = new Invoice();
     }
+    @Test
+    public void testConstructorInvoiceNumber(){
+        int number = invoice.getInvoiceNumber();
+    }
+
+    @Test
+    public void testInvoiceNumberGreaterThanZero() {
+        Assert.assertThat(invoice.getInvoiceNumber(), Matchers.greaterThan (0));
+    }
+
+    @Test
+    public void testInvoiceNumberAscending() {
+        Assert.assertThat(invoice.getInvoiceNumber(), Matchers.lessThan (new Invoice().getInvoiceNumber()));
+    }
 
     @Test
     public void testEmptyInvoiceHasEmptySubtotal() {
@@ -43,6 +57,19 @@ public class InvoiceTest {
         invoice.addProduct(onions);
         invoice.addProduct(apples);
         Assert.assertThat(new BigDecimal("20"), Matchers.comparesEqualTo(invoice.getNetTotal()));
+    }
+
+    @Test
+    public void testInvoicePrinter() {
+        Assert.assertThat(new String("Faktura nr: 7"), Matchers.comparesEqualTo(invoice.printInvoice()));
+    }
+
+    @Test
+    public void testInvoiceForTwoSameProducts() {
+        Product onions = new TaxFreeProduct("Warzywa", new BigDecimal("10"));
+        invoice.addProduct(onions);
+        //invoice.getProducts();
+        //Assert.assertThat();
     }
 
     @Test
@@ -90,7 +117,7 @@ public class InvoiceTest {
     }
 
     @Test
-    public void testInvoiceHasPropoerSubtotalWithQuantityMoreThanOne() {
+    public void testInvoiceHasProperSubtotalWithQuantityMoreThanOne() {
         // 2x kubek - price: 10
         invoice.addProduct(new TaxFreeProduct("Kubek", new BigDecimal("5")), 2);
         // 3x kozi serek - price: 30
@@ -101,7 +128,7 @@ public class InvoiceTest {
     }
 
     @Test
-    public void testInvoiceHasPropoerTotalWithQuantityMoreThanOne() {
+    public void testInvoiceHasProperTotalWithQuantityMoreThanOne() {
         // 2x chleb - price with tax: 10
         invoice.addProduct(new TaxFreeProduct("Chleb", new BigDecimal("5")), 2);
         // 3x chedar - price with tax: 32.40
