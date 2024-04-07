@@ -7,7 +7,7 @@ import java.util.Map;
 import pl.edu.agh.mwo.invoice.product.Product;
 
 public class Invoice {
-    private Map<Product, Integer> products = new HashMap<Product, Integer>();
+    private final Map<Product, Integer> products = new HashMap<Product, Integer>();
 
     private final int invoiceNumber;
     private static int invoiceCount = 0;
@@ -24,6 +24,7 @@ public class Invoice {
         validateProductAndQuantity(product, quantity);
         products.merge(product, quantity, Integer::sum);
     }
+
     private void validateProductAndQuantity(Product product, Integer quantity) {
         if (product == null || quantity <= 0) {
             throw new IllegalArgumentException("Product cannot be null and quantity must be positive");
