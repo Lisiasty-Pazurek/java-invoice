@@ -12,7 +12,9 @@ public class Invoice {
     private final int invoiceNumber;
     private static int invoiceCount = 0;
 
-    public Invoice(){this.invoiceNumber = ++invoiceCount;}
+    public Invoice() {
+        this.invoiceNumber = ++invoiceCount;
+    }
 
     public void addProduct(Product product) {
         addProduct(product, 1);
@@ -22,11 +24,11 @@ public class Invoice {
         if (product == null || quantity <= 0) {
             throw new IllegalArgumentException();
         }
-        if (products.containsKey(product))
-        {
+        if (products.containsKey(product)) {
             products.compute(product, (key, value) -> value + quantity);
+        }   else {
+            products.put(product, quantity);
         }
-        else products.put(product, quantity);
     }
 
     public BigDecimal getNetTotal() {
@@ -57,15 +59,14 @@ public class Invoice {
 
 
     public String printInvoice() {
-        String invoiceHeader = "Faktura nr: " + invoiceNumber +"\n";
+        String invoiceHeader = "Faktura nr: " + invoiceNumber + "\n";
         int amount = 0;
-        for (Map.Entry<Product, Integer> entry : products.entrySet())
-        {
+        for (Map.Entry<Product, Integer> entry : products.entrySet()) {
             Product product = entry.getKey();
             Integer quantity = entry.getValue();
 
             invoiceHeader += product.getName() + " - " + product.getPrice() + " x " + quantity + "\n";
-            amount +=1;
+            amount += 1;
         }
         invoiceHeader += "Liczba pozycji: " + amount + "\n";
         return invoiceHeader;
