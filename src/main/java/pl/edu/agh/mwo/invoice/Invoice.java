@@ -22,7 +22,11 @@ public class Invoice {
         if (product == null || quantity <= 0) {
             throw new IllegalArgumentException();
         }
-        products.put(product, quantity);
+        if (products.containsKey(product))
+        {
+            products.compute(product, (key, value) -> value + quantity);
+        }
+        else products.put(product, quantity);
     }
 
     public BigDecimal getNetTotal() {
@@ -53,13 +57,20 @@ public class Invoice {
 
 
     public String printInvoice() {
-        String invoiceHeader = "Faktura nr: " + invoiceNumber;
-
-        for (int i = 0; i < products.size(); i++)
+        String invoiceHeader = "Faktura nr: " + invoiceNumber +"\n";
+        int amount = 0;
+        for (Map.Entry<Product, Integer> entry : products.entrySet())
         {
+            Product product = entry.getKey();
+            Integer quantity = entry.getValue();
 
+            invoiceHeader += product.getName() + " - " + product.getPrice() + " x " + quantity + "\n";
+            amount +=1;
         }
-
+        invoiceHeader += "Liczba pozycji: " + amount + "\n";
         return invoiceHeader;
+    }
+
+    public void getProducts() {
     }
 }

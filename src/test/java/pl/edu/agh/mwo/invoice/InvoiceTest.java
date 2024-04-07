@@ -61,14 +61,14 @@ public class InvoiceTest {
 
     @Test
     public void testInvoicePrinter() {
-        Assert.assertThat(new String("Faktura nr: 7"), Matchers.comparesEqualTo(invoice.printInvoice()));
+        Assert.assertThat(new String("Faktura nr: 7\nLiczba pozycji: 0\n"), Matchers.comparesEqualTo(invoice.printInvoice()));
     }
 
     @Test
     public void testInvoiceForTwoSameProducts() {
         Product onions = new TaxFreeProduct("Warzywa", new BigDecimal("10"));
         invoice.addProduct(onions);
-        //invoice.getProducts();
+        invoice.getProducts();
         //Assert.assertThat();
     }
 
