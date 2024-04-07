@@ -72,6 +72,7 @@ public class Invoice {
         return invoiceHeader;
     }
 
-    public void getProducts() {
+    public Map<Product, Integer> getProducts() {
+        return this.products;
     }
 }

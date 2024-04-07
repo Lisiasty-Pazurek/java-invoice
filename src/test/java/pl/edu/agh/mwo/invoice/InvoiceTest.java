@@ -61,15 +61,19 @@ public class InvoiceTest {
 
     @Test
     public void testInvoicePrinter() {
-        Assert.assertThat(new String("Faktura nr: 7\nLiczba pozycji: 0\n"), Matchers.comparesEqualTo(invoice.printInvoice()));
+        Product onions = new TaxFreeProduct("Warzywa", new BigDecimal("10"));
+        Product apples = new TaxFreeProduct("Owoce", new BigDecimal("10"));
+        invoice.addProduct(onions);
+        invoice.addProduct(apples);
+        Assert.assertThat(new String("Faktura nr: 7\nWarzywa - 10 x 1\nOwoce - 10 x 1\nLiczba pozycji: 2\n"), Matchers.comparesEqualTo(invoice.printInvoice()));
     }
 
     @Test
     public void testInvoiceForTwoSameProducts() {
         Product onions = new TaxFreeProduct("Warzywa", new BigDecimal("10"));
+        invoice.addProduct(onions, 2);
         invoice.addProduct(onions);
-        invoice.getProducts();
-        //Assert.assertThat();
+        Assert.assertThat(3, Matchers.comparesEqualTo(invoice.getProducts().get(onions)));
     }
 
     @Test
