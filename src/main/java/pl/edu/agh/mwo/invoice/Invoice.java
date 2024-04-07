@@ -65,7 +65,7 @@ public class Invoice {
             Product product = entry.getKey();
             Integer quantity = entry.getValue();
 
-            invoiceHeader += product.getName() + " - " + product.getPrice() + " x " + quantity + "\n";
+            invoiceHeader += product.getName() + ", Cena: " + product.getPrice() + ", Ilość: " + quantity + "\n";
             amount += 1;
         }
         invoiceHeader += "Liczba pozycji: " + amount + "\n";

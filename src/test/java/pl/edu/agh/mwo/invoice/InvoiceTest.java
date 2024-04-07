@@ -67,6 +67,8 @@ public class InvoiceTest {
         invoice.addProduct(onions);
         invoice.addProduct(apples);
         Assert.assertThat(invoice.printInvoice(), containsString("Faktura nr: " + invoice.getInvoiceNumber()));
+        Assert.assertThat(invoice.printInvoice(), containsString("Warzywa, Cena: 10, Ilość: 1"));
+        Assert.assertThat(invoice.printInvoice(), containsString("Owoce, Cena: 10, Ilość: 1"));
     }
 
     @Test
