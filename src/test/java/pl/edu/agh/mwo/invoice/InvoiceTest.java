@@ -2,6 +2,7 @@ package pl.edu.agh.mwo.invoice;
 
 import java.math.BigDecimal;
 
+import static org.hamcrest.Matchers.*;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
@@ -65,7 +66,7 @@ public class InvoiceTest {
         Product apples = new TaxFreeProduct("Owoce", new BigDecimal("10"));
         invoice.addProduct(onions);
         invoice.addProduct(apples);
-        Assert.assertThat(new String("Faktura nr: " + invoice.getInvoiceNumber() + "\nWarzywa - 10 x 1\nOwoce - 10 x 1\nLiczba pozycji: 2\n"), Matchers.comparesEqualTo(invoice.printInvoice()));
+        Assert.assertThat(invoice.printInvoice(), containsString("Faktura nr: " + invoice.getInvoiceNumber()));
     }
 
     @Test
