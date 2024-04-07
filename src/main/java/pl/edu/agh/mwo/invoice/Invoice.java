@@ -21,13 +21,12 @@ public class Invoice {
     }
 
     public void addProduct(Product product, Integer quantity) {
+        validateProductAndQuantity(product, quantity);
+        products.merge(product, quantity, Integer::sum);
+    }
+    private void validateProductAndQuantity(Product product, Integer quantity) {
         if (product == null || quantity <= 0) {
-            throw new IllegalArgumentException();
-        }
-        if (products.containsKey(product)) {
-            products.compute(product, (key, value) -> value + quantity);
-        }   else {
-            products.put(product, quantity);
+            throw new IllegalArgumentException("Product cannot be null and quantity must be positive");
         }
     }
 
@@ -73,6 +72,6 @@ public class Invoice {
     }
 
     public Map<Product, Integer> getProducts() {
-        return this.products;
+        return new HashMap<>(products);
     }
 }
